@@ -30,7 +30,8 @@
 为了方便快速了解系统功能，我们提供了全套解决方案：
 
 * **🌐 项目门户**: [https://parse.ucmao.cn/](https://parse.ucmao.cn/) (扫码引导页)
-* **⚙️ 管理后台**: [https://parse.ucmao.cn/admin/](https://parse.ucmao.cn/admin/) (默认: `admin` / `admin123`)
+* **⚙️ 管理后台**: [https://parse.ucmao.cn/admin/](https://parse.ucmao.cn/admin/)
+    * 演示者: `guest` / `guest123` （仅查看权限，部分功能需部署后使用）
 * **🧩 小程序端**: 扫描下方太阳码进行体验
 
 <p align="center">
@@ -102,6 +103,8 @@ pip install -r requirements.txt
 ```ini
 # 核心域名
 DOMAIN = your_domain_here
+# 用于加密 Session
+SECRET_KEY =your_secret_key
 
 # 微信小程序登录配置
 WECHAT_APP_ID = your_wechat_app_id_here
@@ -117,6 +120,10 @@ DB_PASSWORD = your_password_here
 # 管理后台配置 (可选)
 ADMIN_USER = admin
 ADMIN_PASSWORD = admin123
+DEMO_USER = guest
+DEMO_PASSWORD = guest123
+
+
 
 ```
 
