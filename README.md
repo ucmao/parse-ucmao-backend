@@ -32,13 +32,12 @@
 * **🌐 项目门户**: [https://parse.ucmao.cn/](https://parse.ucmao.cn/) (扫码引导页)
 * **⚙️ 管理后台**: [https://parse.ucmao.cn/admin/](https://parse.ucmao.cn/admin/) (默认: `admin` / `admin123`)
 * **🧩 小程序端**: 扫描下方太阳码进行体验
-* **🎨 前端源码**: [https://github.com/ucmao/parse-ucmao-mp](https://github.com/ucmao/parse-ucmao-mp)
 
 <p align="center">
 <img src="static/images/qr_code.jpg" width="180" alt="优创猫去水印太阳码">
 </p>
 
-> **协作提示**：本仓库提供核心解析逻辑与 RESTful API。如需构建完整应用，请配合上述前端仓库使用。
+> **协作提示**：本仓库提供核心解析逻辑与 RESTful API。如需构建完整应用，请配合前端仓库使用： [https://github.com/ucmao/parse-ucmao-mp](https://github.com/ucmao/parse-ucmao-mp)
 
 ---
 
