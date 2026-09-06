@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
-  "description": "45 平台多形态全景自动化回归测试用例库 (涵盖短链/长链/图集/单视频/AI生成等)",
-  "total_cases": 301,
+  "description": "50 平台多形态全景自动化回归测试用例库 (涵盖短链/长链/图集/单视频/AI生成等)",
+  "total_cases": 306,
   "cases": [
     {
       "platform": "网易云音乐",
@@ -4378,6 +4378,80 @@
       ],
       "note": "2026-09-06 已验证: LOFTER 创作者短视频",
       "pattern": "同人短视频"
+    },
+    {
+      "platform": "星绘AI",
+      "url": "https://www.butterflyai.cn/s/gQ0EXE9BJsw/",
+      "media_types": [
+        "images"
+      ],
+      "expected_fields": [
+        "images",
+        "cover",
+        "title",
+        "author"
+      ],
+      "note": "2026-09-06 已验证: 星绘AI 无水印原画图集",
+      "pattern": "AI 生图/写真作品"
+    },
+    {
+      "platform": "星绘AI",
+      "url": "https://www.butterflyai.cn/share/record?share_code=9r3kCJOnwubPE15yFhKY&is_mine=1&resource_count=1&entity_type=2",
+      "media_types": [
+        "video"
+      ],
+      "expected_fields": [
+        "video",
+        "cover",
+        "title",
+        "author"
+      ],
+      "note": "2026-09-06 已验证: 星绘AI 视频生成作品",
+      "pattern": "AI 视频生成作品"
+    },
+    {
+      "platform": "央视",
+      "url": "https://tv.cctv.com/2026/05/26/VIDElJFgf7P8XnEqtQr04Lf7260526.shtml?spm=C22284.PP7miAIBYiAV.EIn520ebHszi.32",
+      "media_types": [
+        "video"
+      ],
+      "expected_fields": [
+        "video",
+        "cover",
+        "title",
+        "author"
+      ],
+      "note": "2026-09-06 已验证: CCTV 栏目点播视频与 HLS 流",
+      "pattern": "综合栏目点播"
+    },
+    {
+      "platform": "央视",
+      "url": "https://content-static.cctvnews.cctv.com/snow-book/video.html?item_id=12063254061111721092&t=1787103208459&toc_style_id=video_default&share_to=copy_url&track_id=766f3425-9b74-40ac-b2cf-751f9e5a19fd",
+      "media_types": [
+        "video"
+      ],
+      "expected_fields": [
+        "video",
+        "cover",
+        "title",
+        "author"
+      ],
+      "note": "2026-09-06 已验证: 央视新闻客户端微视频",
+      "pattern": "新闻微视频"
+    },
+    {
+      "platform": "央视频",
+      "url": "https://www.yspapp.cn/5Sqx",
+      "media_types": [
+        "images"
+      ],
+      "expected_fields": [
+        "cover",
+        "title",
+        "author"
+      ],
+      "note": "2026-09-06 已验证: 央视频短链与微视频详情",
+      "pattern": "微视频及短剧详情"
     }
   ]
 }

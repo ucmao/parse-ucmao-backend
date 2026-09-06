@@ -2,7 +2,7 @@
 
 欢迎查阅 **Media Parser** 开发者文档与逆向工程知识库。
 
-本项目是一个高性能、模块化、支持 **47 个主流媒体与 AI 内容平台** 的无水印音视频、图文及 LivePhoto 结构化解析引擎。
+本项目是一个高性能、模块化、支持 **50 个主流媒体与 AI 内容平台** 的无水印音视频、图文及 LivePhoto 结构化解析引擎。
 
 ---
 
@@ -14,8 +14,8 @@
 * 📖 **平台实战指南 (Parser Guides)**：
   * **短视频与轻社区**：[抖音](parsers/douyin.md) ｜ [快手](parsers/kuaishou.md) ｜ [今日头条](parsers/xigua.md) ｜ [皮皮虾](parsers/pipixia.md) ｜ [皮皮搞笑](parsers/pipigaoxiao.md) ｜ [最右](parsers/zuiyou.md) ｜ [美拍](parsers/meipai.md) ｜ [微视](parsers/weishi.md) ｜ [绿洲](parsers/lvzhou.md) ｜ [番茄小说/红果短剧/红果漫剧](parsers/fanqie.md)
   * **图文与综合社区**：[小红书](parsers/xiaohongshu.md) ｜ [微信公众号](parsers/wechat-mp.md) ｜ [微博](parsers/weibo.md) ｜ [知乎](parsers/zhihu.md) ｜ [闲鱼](parsers/xianyu.md) ｜ [Soul](parsers/soul.md) ｜ [得物](parsers/dewu.md) ｜ [网易LOFTER](parsers/lofter.md)
-  * **长视频与弹幕/创作**：[哔哩哔哩](parsers/bilibili.md) ｜ [AcFun](parsers/acfun.md) ｜ [新片场](parsers/xinpianchang.md) ｜ [好看视频](parsers/haokan.md) ｜ [西瓜视频](parsers/xigua.md) ｜ [剪映](parsers/jianying.md) ｜ [快影](parsers/kwaiying.md)
-  * **AI 生成与大模型**：[豆包 AI](parsers/doubao.md) ｜ [腾讯元宝](parsers/yuanbao.md) ｜ [即梦 AI](parsers/jimeng.md) ｜ [可灵 AI](parsers/kling.md) ｜ [海螺 AI](parsers/hailuo.md) ｜ [通义千问](parsers/qianwen.md) ｜ [夸克 AI](parsers/quark-ai.md) ｜ [小云雀 AI](parsers/xiaoyunque.md) ｜ [松果时刻](parsers/pinecone-moment.md)
+  * **长视频与电视/融媒**：[哔哩哔哩](parsers/bilibili.md) ｜ [AcFun](parsers/acfun.md) ｜ [央视](parsers/cctv.md) ｜ [央视频](parsers/yangshipin.md) ｜ [新片场](parsers/xinpianchang.md) ｜ [好看视频](parsers/haokan.md) ｜ [西瓜视频](parsers/xigua.md) ｜ [剪映](parsers/jianying.md) ｜ [快影](parsers/kwaiying.md)
+  * **AI 生成与大模型**：[豆包 AI](parsers/doubao.md) ｜ [星绘 AI](parsers/butterflyai.md) ｜ [腾讯元宝](parsers/yuanbao.md) ｜ [即梦 AI](parsers/jimeng.md) ｜ [可灵 AI](parsers/kling.md) ｜ [海螺 AI](parsers/hailuo.md) ｜ [通义千问](parsers/qianwen.md) ｜ [夸克 AI](parsers/quark-ai.md) ｜ [小云雀 AI](parsers/xiaoyunque.md) ｜ [松果时刻](parsers/pinecone-moment.md)
   * **音频与垂直频道**：[汽水音乐](parsers/qsmusic.md) ｜ [QQ音乐](parsers/qqmusic.md) ｜ [网易云音乐](parsers/netease-music.md) ｜ [酷狗音乐](parsers/kugou-music.md) ｜ [配音秀](parsers/peiyinxiu.md) ｜ [全民K歌](parsers/quanminkge.md) ｜ [虎牙](parsers/huya.md) ｜ [梨视频](parsers/lishipin.md) ｜ [微信视频号](parsers/wechat-channels.md) ｜ [腾讯频道](parsers/tencent-channel.md)
 
 ---
@@ -76,6 +76,9 @@
 | 45 | **松果时刻** | AI 故事多页视频 / 图集 / 配音 | ✅ 支持 | 🟢 公开内容免配置 | 公开详情接口 | [查看指南](parsers/pinecone-moment.md) |
 | 46 | **得物** | 潮流穿搭 / 开箱短视频 / 高清图集 | ✅ 支持 | 🟢 免配置 | Next.js metaOGInfo 数据提取 | [查看指南](parsers/dewu.md) |
 | 47 | **网易LOFTER** | 二次元插画 / 摄影图集 / 创作者短视频 | ✅ 支持 | 🟢 免配置 | window.__initialize_data__ 数据提取 | [查看指南](parsers/lofter.md) |
+| 48 | **星绘 AI** | AI 生图 / 原画写真 / AI 视频 | ✅ 支持 | 🟢 免配置 | 字节分享 API (Community Service) | [查看指南](parsers/butterflyai.md) |
+| 49 | **央视** | 栏目视频 (HLS/m3u8) / 央视新闻微视频 | ✅ 支持 | 🟢 免配置 | CNTV 调度接口 + 阿里云 API 网关 HMAC-SHA256 验签 | [查看指南](parsers/cctv.md) |
+| 50 | **央视频** | 微视频 / 微短剧 / 高清封面与作者信息 | ✅ 支持 | 🟢 免配置 | 页面 SSR 状态机 (__STATE__) 提取与 Meta 跳转跟踪 | [查看指南](parsers/yangshipin.md) |
 
 ---
 

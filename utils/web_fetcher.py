@@ -22,8 +22,8 @@ class WebFetcher:
         # 绿洲分享页会对通用桌面请求头返回 500，由解析器使用移动端请求头抓取。
         # 微博博文可通过 API 直接根据 ID 解析，直接访问网页端常触发访客系统重定向。
         domain = UrlParser.get_domain(url)
-        if domain not in {"t.cn", "b23.tv", "xhslink.cn", "xhslink.com", "hy.fan", "dw4.co"}:
-            if UrlParser.get_platform(url) in {"知乎", "绿洲", "新片场", "夸克AI", "通义千问", "微博", "小云雀AI", "哔哩哔哩", "快影", "微信公众号", "海螺AI", "网易LOFTER", "得物"}:
+        if domain not in {"t.cn", "b23.tv", "xhslink.cn", "xhslink.com", "hy.fan", "dw4.co", "yspapp.cn"}:
+            if UrlParser.get_platform(url) in {"知乎", "绿洲", "新片场", "夸克AI", "通义千问", "微博", "小云雀AI", "哔哩哔哩", "快影", "微信公众号", "海螺AI", "网易LOFTER", "得物", "央视"}:
                 return UrlParser.extract_video_address(url)
         try:
             current_url = url
@@ -32,6 +32,10 @@ class WebFetcher:
                 resp = requests.get(current_url, headers=WebFetcher.headers, allow_redirects=False, timeout=5)
                 resp.raise_for_status()
                 redirect_url = resp.headers.get("location")
+                if not redirect_url and resp.status_code == 200 and isinstance(getattr(resp, "text", None), str):
+                    meta_match = re.search(r'<meta[^>]*http-equiv=["\']?refresh["\']?[^>]*content=["\']?[^"\']*URL=[\'"]?([^\'" >]+)', resp.text, re.I)
+                    if meta_match:
+                        redirect_url = meta_match.group(1).strip("'\"")
                 if redirect_url:
                     redirect_url = urljoin(current_url, redirect_url)
                     # 如果重定向到了登录页、404拦截页、验证码校验页或错误页，不要更新 url，直接中断以保留原始有效 URL
@@ -104,6 +108,15 @@ class UrlParser:
 
         if domain.endswith('.dewu.com') or domain.endswith('.poizon.com'):
             return '得物'
+
+        if domain == 'butterflyai.cn' or domain.endswith('.butterflyai.cn'):
+            return '星绘AI'
+
+        if domain in {'cctv.com', 'cctv.cn'} or domain.endswith('.cctv.com') or domain.endswith('.cctv.cn'):
+            return '央视'
+
+        if domain in {'yangshipin.cn', 'yspapp.cn'} or domain.endswith('.yangshipin.cn') or domain.endswith('.yspapp.cn'):
+            return '央视频'
 
         return None
 
@@ -365,6 +378,33 @@ class UrlParser:
                     preserved_params.append((key, value))
             if preserved_params:
                 address = f"{address}?{urlencode(preserved_params)}"
+        elif platform == "星绘AI":
+            query_params = parse_qs(parsed_url.query)
+            preserved_params = []
+            for key in ("share_code", "share_id", "entity_type", "is_mine", "resource_count", "share_token"):
+                value = query_params.get(key, [None])[0]
+                if value is not None:
+                    preserved_params.append((key, value))
+            if preserved_params:
+                address = f"{address}?{urlencode(preserved_params)}"
+        elif platform == "央视":
+            query_params = parse_qs(parsed_url.query)
+            preserved_params = []
+            for key in ("item_id", "articleId", "pid", "guid"):
+                value = query_params.get(key, [None])[0]
+                if value is not None:
+                    preserved_params.append((key, value))
+            if preserved_params:
+                address = f"{address}?{urlencode(preserved_params)}"
+        elif platform == "央视频":
+            query_params = parse_qs(parsed_url.query)
+            preserved_params = []
+            for key in ("vid", "cid", "type", "serverFrom"):
+                value = query_params.get(key, [None])[0]
+                if value is not None:
+                    preserved_params.append((key, value))
+            if preserved_params:
+                address = f"{address}?{urlencode(preserved_params)}"
         return address
 
     @staticmethod
@@ -446,12 +486,26 @@ class UrlParser:
             params_ps = query_params.get('ps', [None])[0]
             if params_ps:
                 return params_ps
+            params_share_code = query_params.get('share_code', [None])[0]
+            if params_share_code:
+                return params_share_code
+            params_item_id = query_params.get('item_id', [None])[0]
+            if params_item_id:
+                return params_item_id
+            params_article_id = query_params.get('articleId', [None])[0]
+            if params_article_id:
+                return params_article_id
+            params_guid = query_params.get('guid', [None])[0]
+            if params_guid:
+                return params_guid
             # 尝试从URL路径中获取视频ID
             path_segments = parsed_url.path.strip('/').split('/')
             if path_segments:
                 video_id = path_segments[-1]
                 if video_id.endswith('.html'):
                     video_id = video_id[:-5]
+                elif video_id.endswith('.shtml'):
+                    video_id = video_id[:-6]
                 desktop_mv = re.fullmatch(r'mv_([0-9a-fA-F]{32})', video_id)
                 if desktop_mv:
                     return desktop_mv.group(1)

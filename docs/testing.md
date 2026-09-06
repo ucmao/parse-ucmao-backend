@@ -13,7 +13,7 @@ tests/
 ├── test_parser_factory.py          # 解析器自动注册与工厂路由测试
 ├── test_web_fetcher.py             # 302跳转与URL正则提取测试
 ├── test_*_parser.py                # 各平台专属的单元测试
-├── live_parser_samples.json        # 真实线上验证样本库 (45+ 平台活跃样例)
+├── live_parser_samples.json        # 真实线上验证样本库 (50 平台活跃样例，300+ 用例)
 ├── test_live_parser_samples.py     # 自动化执行样本库回归测试
 └── manual_verify_parsers.py        # 命令行交互式/全量人工排查脚本
 ```
@@ -48,10 +48,10 @@ pytest tests/test_live_parser_samples.py -s
 ```
 
 ### 4. 运行交互式真实样本回归验证工具
-[tests/manual_verify_parsers.py](file:///Users/leo/Projects/media-parser/tests/manual_verify_parsers.py) 支持对 45+ 个平台的多种形态（短链、长链、视频、图集等）发起真实网络请求与字段契约校验：
+[tests/manual_verify_parsers.py](file:///Users/leo/Projects/media-parser/tests/manual_verify_parsers.py) 支持对 50 个平台的多种形态（短链、长链、视频、图集等）发起真实网络请求与字段契约校验：
 
 ```bash
-# 1. 快速冒烟测试 (每个平台只测 1 条最具代表性的链接，极速完成 45 平台基准健康检查)
+# 1. 快速冒烟测试 (每个平台只测 1 条最具代表性的链接，极速完成 50 平台基准健康检查)
 python3 tests/manual_verify_parsers.py --limit 1
 
 # 2. 验证指定平台的多形态覆盖 (支持重复传入多个 --platform 参数)
@@ -60,7 +60,7 @@ python3 tests/manual_verify_parsers.py --platform 微博 --platform 哔哩哔哩
 # 3. 限制指定平台的测试用例数量 (例如每个平台最多测 2 条)
 python3 tests/manual_verify_parsers.py --platform 抖音 --platform 小红书 --limit 2
 
-# 4. 全量深度回归测试 (运行 270+ 条全部多形态真实用例，适合发版前全量巡检)
+# 4. 全量深度回归测试 (运行 300+ 条全部多形态真实用例，适合发版前全量巡检)
 python3 tests/manual_verify_parsers.py
 
 # 5. 列出当前用例库中未配置真实链接的平台
