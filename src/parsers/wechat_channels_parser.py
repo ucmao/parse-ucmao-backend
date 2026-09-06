@@ -38,6 +38,7 @@ class WeChatChannelsParser(BaseParser):
             "cover_url": None,
             "author": None,
             "image_list": [],
+            "audio_url": None,
         }
 
     def _parse_once(self):
@@ -154,6 +155,14 @@ class WeChatChannelsParser(BaseParser):
             or (feed.get("h264VideoInfo") or {}).get("videoUrl")
             or (feed.get("h265VideoInfo") or {}).get("videoUrl")
         )
+        pic_info = feed.get("picInfo") or []
+        image_list = [
+            item["url"]
+            for item in pic_info
+            if isinstance(item, dict) and item.get("url")
+        ]
+        audio_url = (feed.get("bgmInfo") or {}).get("bgmUrl")
+
         return {
             "title": feed.get("description") or "视频号",
             "video_url": video_url,
@@ -164,7 +173,8 @@ class WeChatChannelsParser(BaseParser):
                 "avatar": author.get("headImgUrl") or "",
                 "author_id": author.get("id") or "",
             },
-            "image_list": [],
+            "image_list": image_list,
+            "audio_url": audio_url,
         }
 
     def get_real_video_url(self):
@@ -181,3 +191,9 @@ class WeChatChannelsParser(BaseParser):
 
     def get_author_info(self):
         return self.data["author"]
+
+    def get_image_list(self):
+        return self.data["image_list"]
+
+    def get_audio_url(self):
+        return self.data["audio_url"]

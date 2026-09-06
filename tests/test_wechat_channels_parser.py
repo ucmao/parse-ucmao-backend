@@ -98,6 +98,83 @@ class WeChatChannelsParserTest(unittest.TestCase):
 
         self.assertEqual(data["video_url"], "https://finder.video.qq.com/video-h265.mp4")
 
+    def test_normalizes_image_album_and_bgm(self):
+        result = {
+            "errCode": 0,
+            "data": {
+                "authorInfo": {
+                    "nickname": "UU球177",
+                    "headImgUrl": "https://wx.qlogo.cn/avatar.jpg",
+                },
+                "feedInfo": {
+                    "description": "记录即将进入我的第九个学年",
+                    "coverUrl": "https://finder.video.qq.com/cover.jpg",
+                    "mediaType": 2,
+                    "picInfo": [
+                        {"url": "https://finder.video.qq.com/pic1.jpg"},
+                        {"url": "https://finder.video.qq.com/pic2.jpg"},
+                    ],
+                    "bgmInfo": {
+                        "bgmUrl": "https://wx.music.tc.qq.com/music.m4a",
+                    },
+                },
+            },
+        }
+
+        data = WeChatChannelsParser._normalize_feed(result)
+
+        self.assertIsNone(data["video_url"])
+        self.assertEqual(data["image_list"], [
+            "https://finder.video.qq.com/pic1.jpg",
+            "https://finder.video.qq.com/pic2.jpg",
+        ])
+        self.assertEqual(data["audio_url"], "https://wx.music.tc.qq.com/music.m4a")
+
+    @patch("src.parsers.base_parser.requests.Session.post")
+    @patch.dict(
+        os.environ,
+        {"YUANBAO_COOKIE": "hy_user=test-user; hy_token=test-token"},
+        clear=True,
+    )
+    def test_parses_image_album_with_yuanbao(self, post):
+        album_response = {
+            "errCode": 0,
+            "data": {
+                "authorInfo": {
+                    "nickname": "测试摄影师",
+                    "headImgUrl": "https://wx.qlogo.cn/avatar.jpg",
+                },
+                "feedInfo": {
+                    "description": "摄影图集",
+                    "coverUrl": "https://finder.video.qq.com/cover.jpg",
+                    "mediaType": 2,
+                    "picInfo": [
+                        {"url": "https://finder.video.qq.com/pic1.jpg"},
+                        {"url": "https://finder.video.qq.com/pic2.jpg"},
+                    ],
+                    "bgmInfo": {
+                        "bgmUrl": "https://wx.music.tc.qq.com/music.m4a",
+                    },
+                },
+            },
+        }
+        post.side_effect = [
+            self.response({
+                "data": {
+                    "playable_url": "https://channels.weixin.qq.com/finder-preview/pages/feed?token=temp-token&eid=export-id"
+                }
+            }),
+            self.response(album_response),
+        ]
+
+        parser = WeChatChannelsParser("https://weixin.qq.com/sph/APclmPJEZ0")
+
+        self.assertIsNone(parser.get_real_video_url())
+        self.assertEqual(parser.get_title_content(), "摄影图集")
+        self.assertEqual(len(parser.get_image_list()), 2)
+        self.assertEqual(parser.get_image_list()[0], "https://finder.video.qq.com/pic1.jpg")
+        self.assertEqual(parser.get_audio_url(), "https://wx.music.tc.qq.com/music.m4a")
+
 
 if __name__ == "__main__":
     unittest.main()

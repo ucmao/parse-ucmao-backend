@@ -62,6 +62,8 @@ def parse():
                 return make_response(400, '解析失败：该链接需要小红书登录 Cookie 校验，请在配置中提供有效 Cookie 后重试', None, False, 'XIAOHONGSHU_COOKIE_REQUIRED'), 400
             if platform == '拼多多':
                 return make_response(400, '解析失败：该链接需要拼多多登录 Cookie 校验，请在配置中提供有效 Cookie 后重试', None, False, 'PINDUODUO_COOKIE_REQUIRED'), 400
+            if platform in ('视频号', '微信视频号'):
+                return make_response(400, '解析失败：该链接需要配置腾讯元宝 YUANBAO_COOKIE 凭证后重试', None, False, 'WECHAT_CHANNELS_COOKIE_REQUIRED'), 400
             return make_response(400, '提取媒体内容失败，请检查链接或稍后重试', None, False, 'MEDIA_NOT_FOUND'), 400
 
         processed_image_list = []

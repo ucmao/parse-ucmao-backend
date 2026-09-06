@@ -50,7 +50,7 @@
 | 19 | **汽水音乐** | UGC 视频 / 背景原声 | ✅ 支持 | 🟢 免配置 | 字节系分享 API | [查看指南](parsers/qsmusic.md) |
 | 20 | **全民K歌** | 视频 / 伴奏音频 | ✅ 支持 | 🟢 免配置 | H5 播放页正则提取 | [查看指南](parsers/quanminkge.md) |
 | 21 | **虎牙** | 视频 / 录播 | ✅ 支持 | 🟢 免配置 | 移动端短链解析 | [查看指南](parsers/huya.md) |
-| 22 | **微信视频号** | 视频 | ✅ 支持 | 🟢 免配置 | 视频号短链解析 | [查看指南](parsers/wechat-channels.md) |
+| 22 | **微信视频号** | 视频 / 图集 / 原声音频 | ✅ 支持 | 🔐 需 YUANBAO_COOKIE (媒体流/图集) | 视频号短链 + 腾讯元宝双轨解析 | [查看指南](parsers/wechat-channels.md) |
 | 23 | **腾讯视频/频道** | 视频 | ✅ 支持 | 🟢 免配置 | 企鹅频道分享解析 | [查看指南](parsers/tencent-channel.md) |
 | 24 | **西瓜视频** | 视频 | ✅ 支持 | 🟢 免配置 | 字节系引擎继承解析 | [查看指南](parsers/xigua.md) |
 | 25 | **今日头条** | 视频 / 微头条视频 | ✅ 支持 | 🟢 免配置 | 字节系引擎继承解析 | [查看指南](parsers/xigua.md) |
@@ -103,7 +103,7 @@ DOUYIN_COOKIE="s_v_web_id=verify_xxx; __ac_nonce=xxx;"
 # 2. 豆包 AI 视频无水印权限凭证 (可选，用于获取 1080P 原始无水印视频)
 DOUBAO_COOKIE="sessionid_ss=your_doubao_sessionid_ss"
 
-# 3. 腾讯元宝 Cookie (可选，用于提取视频号原始流，涉及个人账号登录态，建议使用闲置小号)
+# 3. 腾讯元宝 Cookie (可选，用于提取视频号原始流、图集与原声音频，涉及个人账号登录态，建议使用闲置小号)
 YUANBAO_COOKIE="hy_user=xxx; hy_token=yyy;"
 
 # 4. 拼多多 Cookie (可选，用于多多视频原画视频解析)

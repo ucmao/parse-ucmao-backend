@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "description": "50 平台多形态全景自动化回归测试用例库 (涵盖短链/长链/图集/单视频/AI生成等)",
-  "total_cases": 306,
+  "total_cases": 307,
   "cases": [
     {
       "platform": "网易云音乐",
@@ -4303,6 +4303,23 @@
         "author"
       ],
       "note": "2026-09 用户补充: 视频号短链"
+    },
+    {
+      "platform": "视频号",
+      "url": "https://weixin.qq.com/sph/APclmPJEZ0",
+      "pattern": "视频号高清图集与背景原声 (sph)",
+      "media_types": [
+        "images",
+        "audio"
+      ],
+      "expected_fields": [
+        "images",
+        "audio",
+        "cover",
+        "title",
+        "author"
+      ],
+      "note": "2026-09 用户补充: 视频号高清图集与背景原声"
     },
     {
       "platform": "哔哩哔哩",
