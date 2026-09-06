@@ -22,8 +22,8 @@ class WebFetcher:
         # 绿洲分享页会对通用桌面请求头返回 500，由解析器使用移动端请求头抓取。
         # 微博博文可通过 API 直接根据 ID 解析，直接访问网页端常触发访客系统重定向。
         domain = UrlParser.get_domain(url)
-        if domain not in {"t.cn", "b23.tv", "xhslink.cn", "xhslink.com", "hy.fan"}:
-            if UrlParser.get_platform(url) in {"知乎", "绿洲", "新片场", "夸克AI", "通义千问", "微博", "小云雀AI", "哔哩哔哩", "快影", "微信公众号", "海螺AI"}:
+        if domain not in {"t.cn", "b23.tv", "xhslink.cn", "xhslink.com", "hy.fan", "dw4.co"}:
+            if UrlParser.get_platform(url) in {"知乎", "绿洲", "新片场", "夸克AI", "通义千问", "微博", "小云雀AI", "哔哩哔哩", "快影", "微信公众号", "海螺AI", "网易LOFTER", "得物"}:
                 return UrlParser.extract_video_address(url)
         try:
             current_url = url
@@ -98,6 +98,12 @@ class UrlParser:
 
         if domain.endswith('.m.chenzhongtech.com'):
             return '快手'
+
+        if domain == 'lofter.com' or domain.endswith('.lofter.com'):
+            return '网易LOFTER'
+
+        if domain.endswith('.dewu.com') or domain.endswith('.poizon.com'):
+            return '得物'
 
         return None
 
@@ -341,6 +347,24 @@ class UrlParser:
         elif platform in ("红果短剧", "番茄小说", "红果漫剧", "小云雀AI"):
             if parsed_url.query:
                 address = f"{address}?{parsed_url.query}"
+        elif platform == "得物":
+            query_params = parse_qs(parsed_url.query)
+            preserved_params = []
+            for key in ("trendId", "shareId", "source", "shareType", "shareChannel", "isScreenShot"):
+                value = query_params.get(key, [None])[0]
+                if value is not None:
+                    preserved_params.append((key, value))
+            if preserved_params:
+                address = f"{address}?{urlencode(preserved_params)}"
+        elif platform == "网易LOFTER":
+            query_params = parse_qs(parsed_url.query)
+            preserved_params = []
+            for key in ("incantation", "permalink", "postId", "blogId"):
+                value = query_params.get(key, [None])[0]
+                if value is not None:
+                    preserved_params.append((key, value))
+            if preserved_params:
+                address = f"{address}?{urlencode(preserved_params)}"
         return address
 
     @staticmethod
@@ -352,6 +376,9 @@ class UrlParser:
             match_vid = re.search(r'(?:["%22]|%22)?(?:vid|video_id|content_id|material_id)(?:["%22]|%22)?\s*(?:[:=]|%3A)\s*(?:["%22]|%22)?(\d{15,22})', url)
             if match_vid:
                 return match_vid.group(1)
+            params_trend_id = query_params.get('trendId', [None])[0]
+            if params_trend_id:
+                return params_trend_id
             params_share_id = query_params.get('shareId', [None])[0]
             if params_share_id:
                 return params_share_id

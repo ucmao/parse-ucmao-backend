@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "description": "45 平台多形态全景自动化回归测试用例库 (涵盖短链/长链/图集/单视频/AI生成等)",
-  "total_cases": 297,
+  "total_cases": 301,
   "cases": [
     {
       "platform": "网易云音乐",
@@ -4318,6 +4318,66 @@
         "author"
       ],
       "note": "2026-09 用户补充: B站 b23.tv/BV 短链"
+    },
+    {
+      "platform": "得物",
+      "url": "https://m.dewu.com/rn-activity/community-share?trendId=514124663&shareId=8xEKQBm",
+      "media_types": [
+        "video"
+      ],
+      "expected_fields": [
+        "video",
+        "cover",
+        "title",
+        "author"
+      ],
+      "note": "2026-09-06 已验证: 得物无水印 720p 视频动态",
+      "pattern": "UGC 潮流短视频"
+    },
+    {
+      "platform": "得物",
+      "url": "https://m.dewu.com/rn-activity/community-share?trendId=452256836&shareId=KadBoK4",
+      "media_types": [
+        "images"
+      ],
+      "expected_fields": [
+        "images",
+        "cover",
+        "title",
+        "author"
+      ],
+      "note": "2026-09-06 已验证: 得物高清多图穿搭动态",
+      "pattern": "UGC 穿搭图集"
+    },
+    {
+      "platform": "网易LOFTER",
+      "url": "https://emm3716958.lofter.com/post/74daebd2_34ec49f1a?incantation=rzyp3CMgofo9",
+      "media_types": [
+        "images"
+      ],
+      "expected_fields": [
+        "images",
+        "cover",
+        "title",
+        "author"
+      ],
+      "note": "2026-09-06 已验证: LOFTER 二次元插画无损大图原图",
+      "pattern": "二次元摄影与插画图集"
+    },
+    {
+      "platform": "网易LOFTER",
+      "url": "https://jingjiexian261.lofter.com/post/1e52d8b0_2b67492c5?incantation=rzQpNTwdCDD7",
+      "media_types": [
+        "video"
+      ],
+      "expected_fields": [
+        "video",
+        "cover",
+        "title",
+        "author"
+      ],
+      "note": "2026-09-06 已验证: LOFTER 创作者短视频",
+      "pattern": "同人短视频"
     }
   ]
 }

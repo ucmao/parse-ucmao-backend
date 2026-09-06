@@ -247,6 +247,27 @@ class UrlParserTest(unittest.TestCase):
             with self.subTest(domain=domain):
                 self.assertEqual(UrlParser.get_platform(domain), "拼多多")
 
+    def test_recognizes_dewu_domains(self):
+        for domain in [
+            "https://dw4.co/t/A/HmV2eJqiU",
+            "https://dewu.com/explore",
+            "https://m.dewu.com/rn-activity/community-share?trendId=123",
+            "https://poizon.com/post/456",
+            "https://sub.dewu.com/page",
+        ]:
+            with self.subTest(domain=domain):
+                self.assertEqual(UrlParser.get_platform(domain), "得物")
+
+    def test_recognizes_lofter_domains(self):
+        for domain in [
+            "https://lofter.com/post/123",
+            "https://www.lofter.com/front/detail",
+            "https://emm3716958.lofter.com/post/74daebd2_34ec49f1a",
+            "https://random-author.lofter.com/post/abc_def",
+        ]:
+            with self.subTest(domain=domain):
+                self.assertEqual(UrlParser.get_platform(domain), "网易LOFTER")
+
 
 class WebFetcherTest(unittest.TestCase):
     @staticmethod
@@ -339,6 +360,18 @@ class WebFetcherTest(unittest.TestCase):
             result,
             "https://m.kugou.com/mv?hash=48da1fe5cbe4f8774f73160042377b1e"
             "&sruserid=2369252937&kgsscty1=link",
+        )
+
+    def test_follows_dewu_short_link(self):
+        redirect_url = (
+            "https://m.dewu.com/rn-activity/community-share"
+            "?trendId=514124663&shareId=8xEKQBm&noise=x"
+        )
+        with patch("utils.web_fetcher.requests.get", return_value=self.response(redirect_url)):
+            result = WebFetcher.fetch_redirect_url("https://dw4.co/t/A/HmV2eJqiU")
+        self.assertEqual(
+            result,
+            "https://m.dewu.com/rn-activity/community-share?trendId=514124663&shareId=8xEKQBm",
         )
 
     def test_stops_before_login_or_verification_page(self):

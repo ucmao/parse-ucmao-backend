@@ -54,6 +54,33 @@ flowchart TD
     ParseAPI --> CommonUtils
 ```
 
+### 📂 源码目录组织与模块映射
+
+```text
+media-parser/
+├── app.py                     # 应用入口 (Flask Web 服务与 API 启动)
+├── configs/                   # 核心配置 (域名平台映射、日志配置等)
+├── docs/                      # 逆向百科与开发文档体系
+│   ├── architecture.md        # 系统分层架构与生命周期设计
+│   ├── reverse-guide.md       # 通用逆向方法论 (抓包/SSR/JS签名提取)
+│   ├── testing.md             # 完整测试规范与回归手册
+│   └── parsers/               # 平台逆向分析手册
+├── src/                       # 核心业务逻辑
+│   ├── api/                   # RESTful API 路由 (/api/parse, /api/health)
+│   ├── web/                   # Demo 体验页与交互蓝图
+│   ├── parsers/               # 各平台解析器模块 (核心解析逻辑)
+│   └── parser_factory.py      # 工厂分发器 (解析器动态发现与自动注册)
+├── utils/                     # 底层工具库与逆向支持
+│   ├── signer/                # JS 签名沙箱引擎 (a_bogus 等算法执行)
+│   └── web_fetcher.py         # 智能 URL 识别、重定向追踪与请求封装
+├── tests/                     # 完备的双层测试体系
+│   ├── live_parser_samples.json # 平台真实多形态在线样本库
+│   ├── manual_verify_parsers.py # 命令行交互式冒烟与健康检查工具
+│   └── test_*_parser.py         # 各平台 Mock 自动化单元测试
+├── static/ & templates/       # Web 演示页面前端静态资源
+└── docker-compose.yml         # 容器化一键部署编排
+```
+
 ---
 
 ## 🔄 请求处理生命周期 (Lifecycle)
